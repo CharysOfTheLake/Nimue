@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nimue | Encuentra tu próxima partida de rol</title>
+    <meta
+      name="description"
+      content="Nimue conecta Dungeon Masters y jugadores para crear campañas inolvidables, online y presenciales."
+    />
+    <style>
+      :root {
+        --bg: #0a0d1f;
+        --bg-soft: #131834;
+        --card: rgba(255, 255, 255, 0.06);
+        --text: #f7f8ff;
+        --muted: #b5bbdc;
+        --primary: #7c5cff;
+        --secondary: #2dd4bf;
+        --accent: #ff7ea8;
+        --ring: rgba(124, 92, 255, 0.35);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        color: var(--text);
+        background: radial-gradient(circle at 20% 10%, #1d2350 0%, transparent 40%),
+          radial-gradient(circle at 80% 0%, #2f1f56 0%, transparent 45%), var(--bg);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        width: min(1120px, 92%);
+        margin: 0 auto;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        backdrop-filter: blur(12px);
+        background: rgba(10, 13, 31, 0.72);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 72px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        letter-spacing: 0.3px;
+      }
+
+      .logo {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        box-shadow: 0 8px 20px rgba(124, 92, 255, 0.4);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 20px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border: 0;
+        border-radius: 12px;
+        padding: 11px 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary), #5f8cff);
+        color: white;
+        box-shadow: 0 10px 26px var(--ring);
+      }
+
+      .btn-ghost {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .hero {
+        padding: 82px 0 56px;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 34px;
+        align-items: center;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #c6cfff;
+        background: rgba(124, 92, 255, 0.14);
+        border: 1px solid rgba(124, 92, 255, 0.32);
+        border-radius: 999px;
+        padding: 7px 12px;
+        font-size: 0.85rem;
+      }
+
+      h1 {
+        margin: 14px 0 16px;
+        font-size: clamp(2rem, 5vw, 3.6rem);
+        line-height: 1.05;
+      }
+
+      .lead {
+        color: var(--muted);
+        font-size: 1.1rem;
+        line-height: 1.6;
+        max-width: 60ch;
+      }
+
+      .hero-actions {
+        margin-top: 24px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .hero-card {
+        background: linear-gradient(165deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 20px;
+        padding: 22px;
+        box-shadow: 0 16px 38px rgba(0, 0, 0, 0.35);
+      }
+
+      .session {
+        background: rgba(9, 12, 31, 0.72);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        padding: 14px;
+        margin-top: 12px;
+      }
+
+      .session h3 {
+        margin: 0 0 8px;
+        font-size: 1rem;
+      }
+
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        color: #d8defa;
+        font-size: 0.86rem;
+      }
+
+      .pill {
+        background: rgba(45, 212, 191, 0.14);
+        color: #b6fff4;
+        border: 1px solid rgba(45, 212, 191, 0.34);
+        border-radius: 999px;
+        padding: 4px 8px;
+      }
+
+      section {
+        padding: 34px 0;
+      }
+
+      .section-title {
+        font-size: clamp(1.45rem, 2.4vw, 2rem);
+        margin-bottom: 8px;
+      }
+
+      .section-sub {
+        color: var(--muted);
+        margin-bottom: 20px;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 16px;
+        padding: 18px;
+      }
+
+      .card h3 {
+        margin: 0 0 8px;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .pricing {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .pricing strong {
+        color: #fff;
+      }
+
+      footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        margin-top: 34px;
+        padding: 22px 0 30px;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 920px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .grid-3,
+        .pricing {
+          grid-template-columns: 1fr;
+        }
+        .nav-links {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <a class="brand" href="#inicio" aria-label="Inicio Nimue">
+          <span class="logo" aria-hidden="true"></span>
+          <span>Nimue</span>
+        </a>
+        <nav class="nav-links" aria-label="Navegación principal">
+          <a href="#como-funciona">Cómo funciona</a>
+          <a href="#ventajas">Ventajas</a>
+          <a href="#pricing">Comisiones</a>
+        </nav>
+        <a class="btn btn-primary" href="#cta">Empezar gratis</a>
+      </div>
+    </header>
+
+    <main id="inicio" class="container">
+      <section class="hero">
+        <div>
+          <span class="badge">🎲 Comunidad rolera · Online y presencial</span>
+          <h1>Publica tu campaña, llena plazas y vive aventuras épicas.</h1>
+          <p class="lead">
+            Nimue conecta <strong>Dungeon Masters</strong> y <strong>jugadores</strong> para organizar
+            sesiones de rol con calendario, reservas y pago por adelantado en un único lugar.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#cta">Soy DM: publicar partida</a>
+            <a class="btn btn-ghost" href="#cta">Soy jugador: apuntarme</a>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Ejemplo de partida">
+          <h2 style="margin-top: 0">Campaña destacada</h2>
+          <div class="session">
+            <h3>Sombras sobre Waterdeep</h3>
+            <div class="meta">
+              <span class="pill">Online</span>
+              <span>🗓️ 4 sesiones</span>
+              <span>⏱️ 3h/sesión</span>
+              <span>👥 2 plazas libres</span>
+            </div>
+          </div>
+          <div class="session">
+            <h3>Inicio: 17 mayo · 19:30</h3>
+            <div class="meta">
+              <span>💶 12€ / jugador</span>
+              <span>💳 Pago anticipado</span>
+              <span>✅ Comisión Nimue 15%</span>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="como-funciona">
+        <h2 class="section-title">Cómo funciona</h2>
+        <p class="section-sub">Tres pasos para lanzar y jugar campañas sin fricción.</p>
+        <div class="grid-3">
+          <article class="card">
+            <h3>1. Crea tu anuncio</h3>
+            <p>
+              Publica descripción, fechas o calendario, horario, duración y número de plazas.
+              Define si la sesión es online o presencial.
+            </p>
+          </article>
+          <article class="card">
+            <h3>2. Llena tus mesas</h3>
+            <p>
+              Los jugadores se inscriben en sesiones con vacantes, ven detalles completos y
+              reciben confirmación de su plaza.
+            </p>
+          </article>
+          <article class="card">
+            <h3>3. Cobra sin líos</h3>
+            <p>
+              El pago se realiza por adelantado. Nimue descuenta un 15% de comisión y el DM recibe
+              el 85% restante.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="ventajas">
+        <h2 class="section-title">Pensado para roleros</h2>
+        <p class="section-sub">Herramientas útiles para campañas one-shot y largas.</p>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Calendario por sesiones</h3>
+            <p>Gestiona una fecha única o varias sesiones para campañas de varias semanas.</p>
+          </article>
+          <article class="card">
+            <h3>Control de plazas</h3>
+            <p>Define cupos por sesión y evita overbooking con disponibilidad en tiempo real.</p>
+          </article>
+          <article class="card">
+            <h3>Pagos transparentes</h3>
+            <p>Precio por sesión entre 0,5€ y 50€ por jugador con cálculo automático de comisión.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="pricing">
+        <h2 class="section-title">Modelo económico claro</h2>
+        <p class="section-sub">Sin sorpresas para DMs ni jugadores.</p>
+        <div class="pricing">
+          <article class="card">
+            <h3>Rango de precio por sesión</h3>
+            <p>
+              Cada DM puede fijar importes entre <strong>0,5€</strong> y <strong>50€</strong> por jugador y
+              sesión, según estilo y complejidad de la aventura.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Reparto de importes</h3>
+            <p>
+              Nimue aplica una comisión de <strong>15%</strong>. El DM recibe el
+              <strong>85%</strong> neto en cada reserva pagada.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="cta">
+        <article class="card" style="text-align: center; padding: 28px">
+          <h2 style="margin-top: 0">¿Listo para tu próxima aventura?</h2>
+          <p class="section-sub" style="margin: 0 auto 18px; max-width: 58ch">
+            Crea tu primer anuncio en minutos o encuentra una campaña que encaje con tu grupo.
+          </p>
+          <a class="btn btn-primary" href="#inicio">Entrar en lista de espera</a>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        © <span id="year"></span> Nimue · Plataforma para Dungeon Masters y jugadores.
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
