@@ -33,3 +33,4 @@ Permitir que los DMs publiquen partidas/campañas (presenciales u online), y que
 - Definir modelo de datos inicial (`db/schema.sql`).
 - Exponer API REST inicial (`docs/openapi.yaml`).
 - Implementar autenticación por roles (DM/Jugador/Admin).
+
