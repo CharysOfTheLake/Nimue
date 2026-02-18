@@ -15,11 +15,15 @@
         --accent: #2dd4bf;
         --danger: #fb7185;
       }
+codex/create-web-for-tabletop-rpg-sessions-15v12q
 
       * {
         box-sizing: border-box;
       }
 
+
+      * { box-sizing: border-box; }
+main
       body {
         margin: 0;
         font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
@@ -27,6 +31,7 @@
         background: radial-gradient(circle at 10% 0%, #222a5a 0%, transparent 35%),
           radial-gradient(circle at 95% 10%, #2b1f52 0%, transparent 40%), var(--bg);
       }
+codex/create-web-for-tabletop-rpg-sessions-15v12q
 
       .container {
         width: min(980px, 92%);
@@ -153,6 +158,38 @@
         width: auto;
       }
 
+
+      .container { width: min(980px, 92%); margin: 0 auto; }
+      header { padding: 24px 0 8px; }
+      .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; text-decoration:none; color:#fff; }
+      .logo { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, var(--primary), #ff7ea8); }
+      h1 { margin: 18px 0 10px; font-size: clamp(1.8rem, 4vw, 2.7rem); }
+      .lead { color: var(--muted); margin-bottom: 24px; }
+      .card {
+        background: linear-gradient(165deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+        border: 1px solid rgba(255,255,255,.15);
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 0 16px 40px rgba(0,0,0,.35);
+      }
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+      .full { grid-column: 1 / -1; }
+      label { font-weight: 700; font-size: .95rem; display: block; margin-bottom: 8px; }
+      input, textarea, select {
+        width: 100%;
+        border: 1px solid rgba(255,255,255,.2);
+        border-radius: 12px;
+        padding: 11px 12px;
+        background: rgba(9,12,30,.8);
+        color: #fff;
+        outline: none;
+      }
+      input:focus, textarea:focus, select:focus { border-color: var(--primary); }
+      textarea { min-height: 110px; resize: vertical; }
+      .help { color: var(--muted); font-size: .85rem; margin-top: 6px; }
+      .row { display:flex; align-items:center; gap:10px; margin-top:10px; color:#d8defa; }
+      .row input { width:auto; }
+main
       .btn {
         border: 0;
         border-radius: 12px;
@@ -161,10 +198,15 @@
         cursor: pointer;
       }
 
+codex/create-web-for-tabletop-rpg-sessions-15v12q
+
+
+main
       .btn-primary {
         background: linear-gradient(135deg, var(--primary), #5f8cff);
         color: #fff;
       }
+codex/create-web-for-tabletop-rpg-sessions-15v12q
 
       .msg {
         margin-top: 14px;
@@ -237,6 +279,28 @@
         <div id="pages-notice" class="notice" style="display:none"></div>
       </section>
 
+
+      .msg { margin-top: 14px; padding: 12px; border-radius: 12px; display:none; }
+      .msg.ok { display:block; background: rgba(45,212,191,.12); border:1px solid rgba(45,212,191,.35); }
+      .msg.err { display:block; background: rgba(251,113,133,.12); border:1px solid rgba(251,113,133,.35); }
+      .sessions { margin-top: 8px; }
+      .session-item { padding: 10px; border:1px dashed rgba(255,255,255,.25); border-radius: 10px; margin-top:8px; }
+      @media (max-width: 760px){ .grid { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <header class="container">
+codex/create-web-for-tabletop-rpg-sessions-wc40ip
+      <a class="brand" href="./index.html"><span class="logo"></span><span>Nimue</span></a>
+
+      <a class="brand" href="/index.html"><span class="logo"></span><span>Nimue</span></a>
+main
+      <h1>Publica tu partida como Dungeon Master</h1>
+      <p class="lead">Crea tu campaña, añade sesiones y publícala en minutos. Precio por sesión entre 0,5€ y 50€ por jugador.</p>
+    </header>
+
+    <main class="container" style="padding-bottom: 42px;">
+main
       <form id="dm-form" class="card" novalidate>
         <div class="grid">
           <div>
@@ -302,6 +366,13 @@
             <label for="acceptCommission" style="margin:0;font-weight:500;">
               Entiendo y acepto la comisión de plataforma del 15%.
             </label>
+codex/create-web-for-tabletop-rpg-sessions-15v12q
+            <label for="acceptCommission" style="margin:0;font-weight:500;">
+              Entiendo y acepto la comisión de plataforma del 15%.
+            </label>
+
+            <label for="acceptCommission" style="margin:0;font-weight:500;">Entiendo y acepto la comisión de plataforma del 15%.</label>
+main
           </div>
 
           <div class="full">
@@ -325,10 +396,13 @@
       const message = document.getElementById('message');
       const created = document.getElementById('created');
       const createdList = document.getElementById('created-list');
+codex/create-web-for-tabletop-rpg-sessions-15v12q
       const pagesNotice = document.getElementById('pages-notice');
 
       const isGithubPages = window.location.hostname.endsWith('github.io');
       const apiBase = isGithubPages ? null : '';
+
+main
 
       function toggleModeFields() {
         if (mode.value === 'online') {
@@ -339,6 +413,11 @@
           locationGroup.style.display = 'block';
         }
       }
+codex/create-web-for-tabletop-rpg-sessions-15v12q
+
+      mode.addEventListener('change', toggleModeFields);
+      toggleModeFields();
+main
 
       function showMessage(text, type) {
         message.className = `msg ${type}`;
@@ -350,6 +429,7 @@
         return d.toISOString();
       }
 
+codex/create-web-for-tabletop-rpg-sessions-15v12q
       async function parseApiResponse(res) {
         const contentType = res.headers.get('content-type') || '';
 
@@ -391,6 +471,7 @@
           'Estás en GitHub Pages (sitio estático): aquí no existe backend /api. El formulario se guardará en modo demo local en tu navegador hasta conectar una API real.';
       }
 
+main
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         message.className = 'msg';
@@ -413,6 +494,7 @@
         };
 
         try {
+codex/create-web-for-tabletop-rpg-sessions-15v12q
           if (!apiBase) {
             const saved = persistDraftLocally(campaignPayload, sessionPayload);
             appendCreatedItem(
@@ -438,22 +520,33 @@
           }
 
           const campaignRes = await fetch(`${apiBase}/api/campaigns`, {
+
+          const campaignRes = await fetch('/api/campaigns', {
+main
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(campaignPayload)
           });
 
+codex/create-web-for-tabletop-rpg-sessions-15v12q
           const campaignData = await parseApiResponse(campaignRes);
           if (!campaignRes.ok) {
             throw new Error((campaignData.errors || [campaignData.error || 'Error al crear campaña']).join(' '));
           }
 
           const sessionRes = await fetch(`${apiBase}/api/campaigns/${campaignData.id}/sessions`, {
+
+          const campaignData = await campaignRes.json();
+          if (!campaignRes.ok) throw new Error((campaignData.errors || [campaignData.error]).join(' '));
+
+          const sessionRes = await fetch(`/api/campaigns/${campaignData.id}/sessions`, {
+main
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(sessionPayload)
           });
 
+codex/create-web-for-tabletop-rpg-sessions-15v12q
           const sessionData = await parseApiResponse(sessionRes);
           if (!sessionRes.ok) {
             throw new Error((sessionData.errors || [sessionData.error || 'Error al crear sesión']).join(' '));
@@ -461,6 +554,18 @@
 
           showMessage('✅ Partida publicada correctamente.', 'ok');
           appendCreatedItem(campaignData, sessionData);
+
+          const sessionData = await sessionRes.json();
+          if (!sessionRes.ok) throw new Error((sessionData.errors || [sessionData.error]).join(' '));
+
+          showMessage('✅ Partida publicada correctamente.', 'ok');
+
+          created.style.display = 'block';
+          const item = document.createElement('div');
+          item.className = 'session-item';
+          item.innerHTML = `<strong>${campaignData.title}</strong><br/>${campaignData.mode} · ${new Date(sessionData.startAt).toLocaleString()} · ${sessionData.durationMinutes} min · ${sessionData.slotsTotal} plazas · ${sessionData.pricePerPlayer}€`;
+          createdList.prepend(item);
+ main
 
           form.reset();
           document.getElementById('durationMinutes').value = 180;
