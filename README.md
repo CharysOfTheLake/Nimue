@@ -34,6 +34,7 @@ Permitir que los DMs publiquen partidas/campañas (presenciales u online), y que
 - Exponer API REST inicial (`docs/openapi.yaml`).
 - Implementar autenticación por roles (DM/Jugador/Admin).
 
+
 ## Mini app: formulario DM + backend local
 
 Se ha añadido una mini app funcional para que un DM publique partida y sesión.
@@ -57,3 +58,4 @@ Luego abre:
 - `GET /api/health`
 
 Los datos se guardan en `app/data/store.json`.
+
