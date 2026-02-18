@@ -34,7 +34,10 @@ Permitir que los DMs publiquen partidas/campañas (presenciales u online), y que
 - Exponer API REST inicial (`docs/openapi.yaml`).
 - Implementar autenticación por roles (DM/Jugador/Admin).
 
+codex/create-web-for-tabletop-rpg-sessions-15v12q
 
+
+main
 ## Mini app: formulario DM + backend local
 
 Se ha añadido una mini app funcional para que un DM publique partida y sesión.
@@ -59,3 +62,11 @@ Luego abre:
 
 Los datos se guardan en `app/data/store.json`.
 
+codex/create-web-for-tabletop-rpg-sessions-15v12q
+### Nota sobre GitHub Pages
+
+GitHub Pages sirve contenido **estático**; no ejecuta `app/server.js` ni expone `/api/*`.
+
+- En Pages, `site/dm-publicar.html` funciona en **modo demo local** (guarda borradores en `localStorage`).
+- Para publicación real de campañas/sesiones necesitas ejecutar el backend (`npm start`) o desplegar la API en otro hosting.
+main
