@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nimue | Partidas publicadas</title>
+    <style>
+      :root {
+        --bg: #0a0d1f;
+        --text: #f7f8ff;
+        --muted: #b5bbdc;
+        --primary: #7c5cff;
+        --card: rgba(255, 255, 255, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+        color: var(--text);
+        background: radial-gradient(circle at 20% 0%, #1d2350 0%, transparent 35%),
+          radial-gradient(circle at 90% 0%, #2f1f56 0%, transparent 40%), var(--bg);
+      }
+
+      .container {
+        width: min(1120px, 92%);
+        margin: 0 auto;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(12px);
+        background: rgba(10, 13, 31, 0.72);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .nav {
+        min-height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        color: #fff;
+        text-decoration: none;
+      }
+
+      .logo {
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--primary), #ff7ea8);
+      }
+
+      .links {
+        display: flex;
+        gap: 14px;
+      }
+
+      .btn {
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 12px;
+        padding: 10px 14px;
+        color: #fff;
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      main {
+        padding: 32px 0 42px;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: clamp(1.8rem, 3vw, 2.5rem);
+      }
+
+      .lead {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .notice,
+      .flash {
+        margin-top: 16px;
+        padding: 12px 14px;
+        border-radius: 12px;
+      }
+
+      .notice {
+        background: rgba(124, 92, 255, 0.12);
+        border: 1px solid rgba(124, 92, 255, 0.35);
+        color: #d7cdff;
+      }
+
+      .flash {
+        background: rgba(45, 212, 191, 0.12);
+        border: 1px solid rgba(45, 212, 191, 0.35);
+        color: #c9fff6;
+      }
+
+      .filters {
+        margin-top: 14px;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .filter-box {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .filter-box label {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .filter-box select {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        padding: 7px 10px;
+        background: rgba(9, 12, 30, 0.82);
+        color: #fff;
+      }
+
+      .grid {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 16px;
+        padding: 16px;
+      }
+
+      .card.new {
+        border-color: rgba(45, 212, 191, 0.7);
+        box-shadow: 0 0 0 2px rgba(45, 212, 191, 0.25), 0 10px 28px rgba(0, 0, 0, 0.3);
+      }
+
+      .meta {
+        color: var(--muted);
+        font-size: 0.92rem;
+        margin-top: 8px;
+      }
+
+      .meta.break {
+        overflow-wrap: anywhere;
+      }
+
+      .pill {
+        display: inline-block;
+        font-size: 0.8rem;
+        margin-top: 8px;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: rgba(45, 212, 191, 0.15);
+        border: 1px solid rgba(45, 212, 191, 0.4);
+        color: #b4fff2;
+      }
+
+      .actions {
+        margin-top: 12px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .action-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.06);
+        color: #fff;
+        text-decoration: none;
+        font-size: 0.9rem;
+        cursor: pointer;
+      }
+
+      .action-btn.primary {
+        background: linear-gradient(135deg, var(--primary), #5f8cff);
+        border-color: transparent;
+      }
+
+      .action-btn[aria-disabled='true'] {
+        opacity: 0.55;
+        pointer-events: none;
+      }
+
+      .empty {
+        margin-top: 20px;
+        padding: 18px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px dashed rgba(255, 255, 255, 0.2);
+        color: var(--muted);
+      }
+
+      .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.62);
+        backdrop-filter: blur(4px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 30;
+        padding: 16px;
+      }
+
+      .modal.open {
+        display: flex;
+      }
+
+      .modal-card {
+        width: min(640px, 96vw);
+        background: linear-gradient(165deg, rgba(36, 40, 74, 0.98), rgba(17, 21, 48, 0.98));
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 16px;
+        padding: 18px;
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .close-btn {
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.06);
+        color: #fff;
+        border-radius: 9px;
+        padding: 6px 10px;
+        cursor: pointer;
+      }
+
+      .step {
+        display: none;
+      }
+
+      .step.active {
+        display: block;
+      }
+
+      .step-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .field label {
+        display: block;
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+
+      .field input {
+        width: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 10px;
+        padding: 10px 11px;
+        background: rgba(7, 10, 28, 0.9);
+        color: #fff;
+      }
+
+      .step-actions {
+        margin-top: 14px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+
+      .modal-btn {
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 10px;
+        padding: 9px 13px;
+        background: rgba(255, 255, 255, 0.06);
+        color: #fff;
+        cursor: pointer;
+      }
+
+      .modal-btn.primary {
+        border-color: transparent;
+        background: linear-gradient(135deg, var(--primary), #5f8cff);
+      }
+
+      .step-error {
+        margin-top: 8px;
+        color: #ffb9c7;
+        font-size: 0.92rem;
+        min-height: 20px;
+      }
+
+      .summary {
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 12px;
+        padding: 10px 12px;
+        background: rgba(255, 255, 255, 0.04);
+        margin-bottom: 12px;
+        color: #d5daf6;
+      }
+
+      .step-ok {
+        margin-top: 12px;
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(45, 212, 191, 0.35);
+        background: rgba(45, 212, 191, 0.12);
+        color: #ccfff6;
+      }
+
+      @media (max-width: 820px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .filters {
+          justify-content: flex-start;
+        }
+
+        .step-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 700px) {
+        .links {
+          gap: 8px;
+        }
+
+        .btn {
+          padding: 8px 10px;
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <a class="brand" href="./index.html"><span class="logo"></span><span>Nimue</span></a>
+        <div class="links">
+          <a class="btn" href="./dm-publicar.html">Publicar partida</a>
+          <a class="btn" href="./index.html">Landing</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Partidas publicadas</h1>
+      <p class="lead">Explora las partidas creadas por DMs y consulta sus detalles.</p>
+      <div id="notice" class="notice" style="display:none"></div>
+      <div id="flash" class="flash" style="display:none"></div>
+
+      <section class="filters" aria-label="Filtros de partidas">
+        <div class="filter-box">
+          <label for="sortBy">Ordenar por</label>
+          <select id="sortBy">
+            <option value="date_nearest">Fecha: más próxima primero</option>
+            <option value="price_desc">Precio: más caras primero</option>
+          </select>
+        </div>
+      </section>
+
+      <div id="cards" class="grid"></div>
+      <div id="empty" class="empty" style="display:none">Todavía no hay partidas publicadas.</div>
+    </main>
+
+    <div id="joinModal" class="modal" aria-hidden="true">
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="joinTitle">
+        <div class="modal-header">
+          <h2 id="joinTitle" style="margin:0">Unirse a la partida</h2>
+          <button id="closeModal" class="close-btn" type="button">Cerrar</button>
+        </div>
+
+        <section id="step1" class="step active">
+          <h3 style="margin-top:0">1) Registro</h3>
+          <div class="step-grid">
+            <div class="field" style="grid-column: 1 / -1;">
+              <label for="playerUsername">User name</label>
+              <input id="playerUsername" autocomplete="username" />
+            </div>
+            <div class="field" style="grid-column: 1 / -1;">
+              <label for="playerEmail">E-mail</label>
+              <input id="playerEmail" type="email" autocomplete="email" />
+            </div>
+            <div class="field">
+              <label for="playerPassword">Password</label>
+              <input id="playerPassword" type="password" autocomplete="new-password" />
+            </div>
+            <div class="field">
+              <label for="playerPasswordConfirm">Confirmar password</label>
+              <input id="playerPasswordConfirm" type="password" autocomplete="new-password" />
+            </div>
+          </div>
+          <div id="step1Error" class="step-error"></div>
+          <div class="step-actions">
+            <button id="toStep2" class="modal-btn primary" type="button">Continuar al pago</button>
+          </div>
+        </section>
+
+        <section id="step2" class="step">
+          <h3 style="margin-top:0">2) Pago de reserva</h3>
+          <div id="paymentSummary" class="summary"></div>
+          <div class="step-grid">
+            <div class="field" style="grid-column: 1 / -1;">
+              <label for="cardHolder">Titular de la tarjeta</label>
+              <input id="cardHolder" autocomplete="cc-name" />
+            </div>
+            <div class="field" style="grid-column: 1 / -1;">
+              <label for="cardNumber">Número de tarjeta</label>
+              <input id="cardNumber" inputmode="numeric" autocomplete="cc-number" placeholder="4242 4242 4242 4242" />
+            </div>
+            <div class="field">
+              <label for="cardExpiry">Caducidad (MM/AA)</label>
+              <input id="cardExpiry" inputmode="numeric" autocomplete="cc-exp" placeholder="12/28" />
+            </div>
+            <div class="field">
+              <label for="cardCvc">CVC</label>
+              <input id="cardCvc" inputmode="numeric" autocomplete="cc-csc" placeholder="123" />
+            </div>
+          </div>
+          <div id="step2Error" class="step-error"></div>
+          <div class="step-actions">
+            <button id="backToStep1" class="modal-btn" type="button">Volver</button>
+            <button id="confirmPay" class="modal-btn primary" type="button">Pagar y reservar</button>
+          </div>
+        </section>
+
+        <section id="step3" class="step">
+          <h3 style="margin-top:0">3) Confirmación</h3>
+          <div class="step-ok">
+            ✅ Pago realizado correctamente. Tu reserva está confirmada y el DM recibirá la solicitud.
+          </div>
+          <div id="confirmationSummary" class="summary" style="margin-top:12px"></div>
+          <div class="step-actions">
+            <button id="closeAfterSuccess" class="modal-btn primary" type="button">Cerrar</button>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script>
+      const cardsEl = document.getElementById('cards');
+      const emptyEl = document.getElementById('empty');
+      const noticeEl = document.getElementById('notice');
+      const flashEl = document.getElementById('flash');
+      const sortByEl = document.getElementById('sortBy');
+
+      const joinModal = document.getElementById('joinModal');
+      const step1 = document.getElementById('step1');
+      const step2 = document.getElementById('step2');
+      const step3 = document.getElementById('step3');
+      const step1Error = document.getElementById('step1Error');
+      const step2Error = document.getElementById('step2Error');
+      const paymentSummary = document.getElementById('paymentSummary');
+      const confirmationSummary = document.getElementById('confirmationSummary');
+
+      let allCampaigns = [];
+      let lastCreated = null;
+      let selectedCampaign = null;
+      let selectedSession = null;
+      let registrationData = null;
+
+      function formatDate(iso) {
+        const d = new Date(iso);
+        return Number.isNaN(d.getTime()) ? 'Fecha por confirmar' : d.toLocaleString();
+      }
+
+      function getTimestamp(campaign) {
+        const startAt = campaign.sessions?.[0]?.startAt;
+        const t = Date.parse(startAt || '');
+        return Number.isNaN(t) ? Number.POSITIVE_INFINITY : t;
+      }
+
+      function getPrice(campaign) {
+        const p = Number(campaign.sessions?.[0]?.pricePerPlayer);
+        return Number.isFinite(p) ? p : Number.NEGATIVE_INFINITY;
+      }
+
+      function getLocalDrafts() {
+        return JSON.parse(localStorage.getItem('nimue_drafts') || '[]').map((x) => ({
+          id: x.id,
+          title: x.title,
+          description: x.description,
+          mode: x.mode,
+          dmName: x.dmName,
+          onlineUrl: x.onlineUrl,
+          locationText: x.locationText,
+          sessions: [
+            {
+              startAt: x.startAt,
+              durationMinutes: x.durationMinutes,
+              slotsTotal: x.slotsTotal,
+              pricePerPlayer: x.pricePerPlayer
+            }
+          ]
+        }));
+      }
+
+      async function fetchCampaigns() {
+        try {
+          const res = await fetch('./api/campaigns', { headers: { Accept: 'application/json' } });
+          if (!res.ok) throw new Error('backend_not_available');
+          const ct = res.headers.get('content-type') || '';
+          if (!ct.includes('application/json')) throw new Error('backend_not_available');
+          const data = await res.json();
+          if (!Array.isArray(data)) throw new Error('backend_not_available');
+          return { source: 'api', campaigns: data };
+        } catch {
+          const local = getLocalDrafts();
+          return { source: 'local', campaigns: local };
+        }
+      }
+
+      function sortCampaigns(campaigns, sortBy) {
+        const sorted = [...campaigns];
+
+        if (sortBy === 'price_desc') {
+          sorted.sort((a, b) => {
+            const priceDiff = getPrice(b) - getPrice(a);
+            if (priceDiff !== 0) return priceDiff;
+            return getTimestamp(a) - getTimestamp(b);
+          });
+          return sorted;
+        }
+
+        sorted.sort((a, b) => getTimestamp(a) - getTimestamp(b));
+        return sorted;
+      }
+
+      function renderCampaign(campaign, latestCreated) {
+        const s = campaign.sessions?.[0] || {};
+        const card = document.createElement('article');
+        card.className = 'card';
+
+        const cardId = String(campaign.id || '');
+        if (latestCreated && cardId && cardId === String(latestCreated.id || '')) {
+          card.classList.add('new');
+        }
+
+        const matchUrl =
+          campaign.mode === 'presencial'
+            ? campaign.locationText || ''
+            : campaign.onlineUrl || '';
+
+        const hasUrl = /^https?:\/\//.test(matchUrl);
+        const linkButton = hasUrl
+          ? `<a class="action-btn" href="${matchUrl}" target="_blank" rel="noopener noreferrer">Abrir enlace</a>`
+          : '<span class="action-btn" aria-disabled="true">Sin enlace</span>';
+
+        card.innerHTML = `
+          <h3 style="margin:0">${campaign.title || 'Partida sin título'}</h3>
+          <div class="pill">${campaign.mode === 'presencial' ? 'Presencial' : 'Online'}</div>
+          <p class="meta">${campaign.description || 'Sin descripción'}</p>
+          <p class="meta"><strong>DM:</strong> ${campaign.dmName || 'No disponible'}</p>
+          <p class="meta"><strong>Inicio:</strong> ${formatDate(s.startAt)}</p>
+          <p class="meta"><strong>Duración:</strong> ${s.durationMinutes ?? '-'} min · <strong>Plazas:</strong> ${s.slotsTotal ?? '-'}</p>
+          <p class="meta"><strong>Precio:</strong> ${s.pricePerPlayer ?? '-'}€ / jugador</p>
+          <p class="meta break"><strong>${campaign.mode === 'presencial' ? 'Ubicación' : 'Enlace'}:</strong> ${matchUrl || 'Por confirmar'}</p>
+          <div class="actions">
+            ${linkButton}
+            <button class="action-btn primary" type="button" data-join="${cardId}">Unirse a ésta partida</button>
+          </div>
+        `;
+
+        cardsEl.appendChild(card);
+      }
+
+      function renderList() {
+        cardsEl.innerHTML = '';
+        emptyEl.style.display = 'none';
+
+        const sorted = sortCampaigns(allCampaigns, sortByEl.value);
+        if (!sorted.length) {
+          emptyEl.style.display = 'block';
+          return;
+        }
+
+        sorted.forEach((campaign) => renderCampaign(campaign, lastCreated));
+      }
+
+      function showStep(stepNumber) {
+        step1.classList.toggle('active', stepNumber === 1);
+        step2.classList.toggle('active', stepNumber === 2);
+        step3.classList.toggle('active', stepNumber === 3);
+      }
+
+      function openJoinModal(campaign) {
+        selectedCampaign = campaign;
+        selectedSession = campaign.sessions?.[0] || {};
+        registrationData = null;
+
+        step1Error.textContent = '';
+        step2Error.textContent = '';
+
+        document.getElementById('playerUsername').value = '';
+        document.getElementById('playerEmail').value = '';
+        document.getElementById('playerPassword').value = '';
+        document.getElementById('playerPasswordConfirm').value = '';
+        document.getElementById('cardHolder').value = '';
+        document.getElementById('cardNumber').value = '';
+        document.getElementById('cardExpiry').value = '';
+        document.getElementById('cardCvc').value = '';
+
+        paymentSummary.innerHTML = `
+          <strong>Partida:</strong> ${campaign.title || 'Partida'}<br/>
+          <strong>Inicio:</strong> ${formatDate(selectedSession.startAt)}<br/>
+          <strong>Importe:</strong> ${selectedSession.pricePerPlayer ?? '-'}€ / jugador
+        `;
+
+        showStep(1);
+        joinModal.classList.add('open');
+        joinModal.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeJoinModal() {
+        joinModal.classList.remove('open');
+        joinModal.setAttribute('aria-hidden', 'true');
+      }
+
+      function validateStep1() {
+        const username = document.getElementById('playerUsername').value.trim();
+        const email = document.getElementById('playerEmail').value.trim();
+        const password = document.getElementById('playerPassword').value;
+        const confirm = document.getElementById('playerPasswordConfirm').value;
+
+        if (username.length < 3) return 'El user name debe tener al menos 3 caracteres.';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Introduce un e-mail válido.';
+        if (password.length < 6) return 'La password debe tener al menos 6 caracteres.';
+        if (password !== confirm) return 'Las passwords no coinciden.';
+
+        registrationData = { username, email };
+        return null;
+      }
+
+      function validateStep2() {
+        const holder = document.getElementById('cardHolder').value.trim();
+        const number = document.getElementById('cardNumber').value.replace(/\s+/g, '');
+        const expiry = document.getElementById('cardExpiry').value.trim();
+        const cvc = document.getElementById('cardCvc').value.trim();
+
+        if (holder.length < 3) return 'Introduce el nombre del titular de la tarjeta.';
+        if (!/^\d{13,19}$/.test(number)) return 'El número de tarjeta debe tener entre 13 y 19 dígitos.';
+        if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry)) return 'La caducidad debe tener formato MM/AA.';
+        if (!/^\d{3,4}$/.test(cvc)) return 'El CVC debe tener 3 o 4 dígitos.';
+
+        return null;
+      }
+
+      function initJoinFlow() {
+        document.getElementById('closeModal').addEventListener('click', closeJoinModal);
+        document.getElementById('closeAfterSuccess').addEventListener('click', closeJoinModal);
+
+        document.getElementById('toStep2').addEventListener('click', () => {
+          const err = validateStep1();
+          if (err) {
+            step1Error.textContent = err;
+            return;
+          }
+
+          step1Error.textContent = '';
+          showStep(2);
+        });
+
+        document.getElementById('backToStep1').addEventListener('click', () => {
+          step2Error.textContent = '';
+          showStep(1);
+        });
+
+        document.getElementById('confirmPay').addEventListener('click', () => {
+          const err = validateStep2();
+          if (err) {
+            step2Error.textContent = err;
+            return;
+          }
+
+          step2Error.textContent = '';
+          confirmationSummary.innerHTML = `
+            <strong>Jugador:</strong> ${registrationData?.username || '-'} (${registrationData?.email || '-'})<br/>
+            <strong>Partida:</strong> ${selectedCampaign?.title || '-'}<br/>
+            <strong>Importe cobrado:</strong> ${selectedSession?.pricePerPlayer ?? '-'}€
+          `;
+          showStep(3);
+        });
+
+        joinModal.addEventListener('click', (event) => {
+          if (event.target === joinModal) closeJoinModal();
+        });
+      }
+
+      async function init() {
+        try {
+          lastCreated = JSON.parse(sessionStorage.getItem('nimue_last_created') || 'null');
+        } catch {
+          lastCreated = null;
+        }
+
+        const { source, campaigns } = await fetchCampaigns();
+        allCampaigns = campaigns;
+
+        if (source === 'local') {
+          noticeEl.style.display = 'block';
+          noticeEl.textContent =
+            'Mostrando partidas guardadas en este navegador (modo local/demo). Para catálogo global, conecta backend.';
+        }
+
+        renderList();
+
+        if (lastCreated?.id) {
+          flashEl.style.display = 'block';
+          flashEl.textContent = '✅ Tu partida se ha publicado y aparece en el listado.';
+          sessionStorage.removeItem('nimue_last_created');
+        }
+      }
+
+      sortByEl.addEventListener('change', renderList);
+
+      cardsEl.addEventListener('click', (event) => {
+        const joinButton = event.target.closest('[data-join]');
+        if (!joinButton) return;
+
+        const id = joinButton.getAttribute('data-join');
+        const campaign = allCampaigns.find((c) => String(c.id || '') === String(id));
+        if (!campaign) return;
+
+        openJoinModal(campaign);
+      });
+
+      initJoinFlow();
+      init();
+    </script>
+  </body>
+</html>
