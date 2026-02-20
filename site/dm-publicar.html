@@ -413,6 +413,19 @@
         }
       });
 
+
+      function redirectToPartidas(createdId, source) {
+        try {
+          sessionStorage.setItem(
+            'nimue_last_created',
+            JSON.stringify({ id: createdId, source, at: new Date().toISOString() })
+          );
+        } catch (_) {
+          // no-op
+        }
+        window.location.href = './partidas.html';
+      }
+
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         message.className = 'msg';
@@ -456,6 +469,7 @@
             document.getElementById('pricePerPlayer').value = 12;
             mode.value = 'online';
             toggleModeFields();
+            setTimeout(() => redirectToPartidas(saved.id, 'local'), 350);
             return;
           }
 
@@ -490,6 +504,7 @@
           document.getElementById('pricePerPlayer').value = 12;
           mode.value = 'online';
           toggleModeFields();
+          setTimeout(() => redirectToPartidas(campaignData.id, 'api'), 350);
         } catch (err) {
           showMessage(`❌ Error al publicar: ${err.message}`, 'err');
         }
