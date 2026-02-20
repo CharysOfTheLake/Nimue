@@ -1,0 +1,10 @@
+{
+  "name": "nimue-mini-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Mini app para publicación de partidas por DMs",
+  "main": "app/server.js",
+  "scripts": {
+    "start": "node app/server.js"
+  }
+}
