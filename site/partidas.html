@@ -367,6 +367,7 @@
         <div class="links">
           <a class="btn" href="./dm-publicar.html">Publicar partida</a>
           <a class="btn" href="./index.html">Landing</a>
+          <a class="btn" href="./perfil.html">Perfil</a>
         </div>
       </div>
     </header>
@@ -701,6 +702,34 @@
           }
 
           step2Error.textContent = '';
+          try {
+            localStorage.setItem(
+              'nimue_current_user',
+              JSON.stringify({
+                username: registrationData?.username || 'Jugador',
+                email: registrationData?.email || '',
+                role: 'player'
+              })
+            );
+
+            const joined = JSON.parse(localStorage.getItem('nimue_joined_sessions') || '[]');
+            joined.unshift({
+              id: `join_${Date.now()}`,
+              userEmail: registrationData?.email || '',
+              userName: registrationData?.username || '',
+              campaignId: selectedCampaign?.id || null,
+              campaignTitle: selectedCampaign?.title || '',
+              mode: selectedCampaign?.mode || 'online',
+              startAt: selectedSession?.startAt || null,
+              durationMinutes: selectedSession?.durationMinutes || 0,
+              pricePerPlayer: selectedSession?.pricePerPlayer || 0,
+              joinedAt: new Date().toISOString()
+            });
+            localStorage.setItem('nimue_joined_sessions', JSON.stringify(joined));
+          } catch (_) {
+            // no-op
+          }
+
           confirmationSummary.innerHTML = `
             <strong>Jugador:</strong> ${registrationData?.username || '-'} (${registrationData?.email || '-'})<br/>
             <strong>Partida:</strong> ${selectedCampaign?.title || '-'}<br/>

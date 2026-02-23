@@ -85,7 +85,10 @@
         font-size: 0.95rem;
       }
 
-      .nav-cta {
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
         margin-left: 16px;
       }
 
@@ -265,8 +268,9 @@
         .nav-links {
           display: none;
         }
-        .nav-cta {
+        .header-actions {
           margin-left: 0;
+          width: 100%;
         }
         .hero-actions .btn {
           width: 100%;
@@ -287,7 +291,10 @@
           <a href="#ventajas">Ventajas</a>
           <a href="#pricing">Comisiones</a>
         </nav>
-        <a class="btn btn-primary nav-cta" href="./dm-publicar.html">Empezar gratis</a>
+        <div class="header-actions">
+          <a class="btn btn-ghost" href="./perfil.html">Perfil</a>
+          <a class="btn btn-primary" href="./dm-publicar.html">Empezar gratis</a>
+        </div>
       </div>
     </header>
 

@@ -223,7 +223,7 @@
     <header>
       <div class="container nav">
         <a class="brand" href="./index.html"><span class="logo"></span><span>Nimue</span></a>
-        <a class="btn-link" href="./partidas.html">Ver partidas</a>
+        <div style="display:flex; gap:14px; align-items:center;"><a class="btn-link" href="./partidas.html">Ver partidas</a><a class="btn-link" href="./perfil.html">Mi perfil</a></div>
       </div>
     </header>
 
@@ -426,6 +426,15 @@
         window.location.href = './partidas.html';
       }
 
+
+      function setCurrentUser(profile) {
+        try {
+          localStorage.setItem('nimue_current_user', JSON.stringify(profile));
+        } catch (_) {
+          // no-op
+        }
+      }
+
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         message.className = 'msg';
@@ -446,6 +455,12 @@
           slotsTotal: parseInt(document.getElementById('slotsTotal').value, 10),
           pricePerPlayer: parseFloat(document.getElementById('pricePerPlayer').value)
         };
+
+        setCurrentUser({
+          username: campaignPayload.dmName,
+          email: campaignPayload.dmEmail,
+          role: 'dm'
+        });
 
         try {
           if (!backendAvailable) {
