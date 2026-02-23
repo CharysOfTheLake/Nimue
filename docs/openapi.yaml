@@ -1,0 +1,99 @@
+openapi: 3.0.3
+info:
+  title: Nimue API
+  version: 0.1.0
+  description: API inicial para gestionar campañas de rol, sesiones, inscripciones y pagos.
+servers:
+  - url: https://api.nimue.local
+paths:
+  /campaigns:
+    get:
+      summary: Listar campañas/partidas
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Crear campaña/partida (DM)
+      responses:
+        '201':
+          description: Creada
+  /campaigns/{campaignId}/sessions:
+    post:
+      summary: Crear sesión en campaña
+      parameters:
+        - in: path
+          name: campaignId
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Sesión creada
+  /sessions/{sessionId}/enrollments:
+    post:
+      summary: Inscribirse en sesión
+      parameters:
+        - in: path
+          name: sessionId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                playerId:
+                  type: string
+      responses:
+        '201':
+          description: Inscripción creada
+  /enrollments/{enrollmentId}/pay:
+    post:
+      summary: Pagar inscripción
+      parameters:
+        - in: path
+          name: enrollmentId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Pago confirmado
+components:
+  schemas:
+    Campaign:
+      type: object
+      properties:
+        id:
+          type: string
+        dmId:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        mode:
+          type: string
+          enum: [online, presencial]
+    Session:
+      type: object
+      properties:
+        id:
+          type: string
+        campaignId:
+          type: string
+        startAt:
+          type: string
+          format: date-time
+        durationMinutes:
+          type: integer
+        slotsTotal:
+          type: integer
+        pricePerPlayer:
+          type: number
+          format: float
+          minimum: 0.5
+          maximum: 50
